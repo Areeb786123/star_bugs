@@ -32,7 +32,7 @@ class Splash extends StatelessWidget {
               const Text(
                 "StarBucks",
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 40,
                   fontWeight: FontWeight.bold,
                 ),
               ),
