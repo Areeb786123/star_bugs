@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:star_bugs_ui/ui/coffee/coffee.dart';
+import 'package:star_bugs_ui/ui/utils/routes/app_routes.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,9 +14,9 @@ class Home extends StatefulWidget {
 
 }
 
-
 class _HomeScreen extends State<Home> {
   int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -139,10 +141,9 @@ class _HomeScreen extends State<Home> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) {
-            print(index);
             setState(() {
               _currentIndex = index;
-
+              navigationDirection(index);
             });
           },
           items: const [
@@ -172,13 +173,14 @@ class _HomeScreen extends State<Home> {
     );
   }
 
-  void navigationDirection(int index ) {
+  void navigationDirection(int index) {
     switch (index) {
-      case 0  : break;
-      case 1 : break ;
-      case 2 : break;
-      case 3 :break ;
+    case 0 :  Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const Home())); break;
+    case 1 :  Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const Coffee())); break ;
+    case 2 : break;
+    case 3 :break;
     }
   }
-
 }

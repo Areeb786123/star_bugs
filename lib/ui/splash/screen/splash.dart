@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:star_bugs_ui/ui/splash/home.dart';
+import 'package:star_bugs_ui/ui/home/home.dart';
 
 class Splash extends StatelessWidget {
   const Splash({super.key});
