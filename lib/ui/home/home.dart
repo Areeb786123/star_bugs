@@ -6,14 +6,11 @@ import 'package:star_bugs_ui/ui/utils/routes/app_routes.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
-
   @override
   State<StatefulWidget> createState() {
     return _HomeScreen();
   }
-
 }
-
 class _HomeScreen extends State<Home> {
   int _currentIndex = 0;
 
@@ -24,8 +21,8 @@ class _HomeScreen extends State<Home> {
         appBar: AppBar(
           backgroundColor: Colors.green,
           elevation: 1,
-          leading: Icon(Icons.arrow_back),
-          title: Text("Star Bucks"),
+          leading: const Icon(Icons.arrow_back),
+          title: const Text("Star Bucks"),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -44,7 +41,6 @@ class _HomeScreen extends State<Home> {
                   ),
                 ),
               ),
-
               /**
                * card Balance
                * */
@@ -172,7 +168,6 @@ class _HomeScreen extends State<Home> {
       ),
     );
   }
-
   void navigationDirection(int index) {
     switch (index) {
     case 0 :  Navigator.pushReplacement(
@@ -184,3 +179,5 @@ class _HomeScreen extends State<Home> {
     }
   }
 }
+
+
