@@ -1,16 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:star_bugs_ui/controllers/home_controllers.dart';
 import 'package:star_bugs_ui/ui/coffee/coffee.dart';
 import 'package:star_bugs_ui/ui/utils/routes/app_routes.dart';
 
+import '../../data/models/response/posts.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _HomeScreen();
   }
 }
+
 class _HomeScreen extends State<Home> {
   int _currentIndex = 0;
 
@@ -34,7 +39,7 @@ class _HomeScreen extends State<Home> {
               Card(
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.asset('asset/images/home_coffee.png'),
@@ -53,66 +58,64 @@ class _HomeScreen extends State<Home> {
                     ),
                     child: Card(
                         child: SafeArea(
-                          child: Column(
-                            children: <Widget>[
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 14),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      "Card Balance",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                          fontSize: 18),
-                                    ),
-                                    Text(
-                                      "rs190.00",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 18),
-                                    )
-                                  ],
+                      child: Column(
+                        children: <Widget>[
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 14),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Card Balance",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black,
+                                      fontSize: 18),
                                 ),
+                                Text(
+                                  "rs190.00",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: 18),
+                                )
+                              ],
+                            ),
+                          ),
+                          const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 14),
+                              child: Divider(
+                                height: 1,
+                                color: Colors.black,
+                              )),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Image.asset(
+                                "asset/images/app_image.png",
+                                width: 80,
+                                height: 80,
                               ),
-                              const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 14),
-                                  child: Divider(
-                                    height: 1,
-                                    color: Colors.black,
-                                  )),
-                              const SizedBox(
-                                height: 4,
+                              Image.asset(
+                                "asset/images/app_image.png",
+                                width: 80,
+                                height: 80,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceEvenly,
-                                children: <Widget>[
-                                  Image.asset(
-                                    "asset/images/app_image.png",
-                                    width: 80,
-                                    height: 80,
-                                  ),
-                                  Image.asset(
-                                    "asset/images/app_image.png",
-                                    width: 80,
-                                    height: 80,
-                                  ),
-                                  Image.asset(
-                                    "asset/images/app_image.png",
-                                    width: 80,
-                                    height: 80,
-                                  ),
-                                ],
+                              Image.asset(
+                                "asset/images/app_image.png",
+                                width: 80,
+                                height: 80,
                               ),
                             ],
                           ),
-                        )),
+                        ],
+                      ),
+                    )),
                   )),
               const SizedBox(height: 14),
               Container(
@@ -127,10 +130,12 @@ class _HomeScreen extends State<Home> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
+              ),
               /*
               * list of items
               * */
+              const SizedBox(height: 14),
+              renderExploreList(HomeController().post),
             ],
           ),
         ),
@@ -168,16 +173,51 @@ class _HomeScreen extends State<Home> {
       ),
     );
   }
+
+  Widget renderExploreList(List<Post> post) {
+    print("Areeb $post");
+    if (post.isNotEmpty) {
+      return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: post.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(
+                post[index].title.toString(),
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            );
+          });
+    } else {
+      return emptyData();
+    }
+  }
+
+   Widget emptyData() {
+    return SizedBox(
+      width: double.infinity,
+      child: Flexible(
+        child: Image.asset('asset/images/no_internet.png'),
+      ),
+    );
+  }
+
   void navigationDirection(int index) {
     switch (index) {
-    case 0 :  Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const Home())); break;
-    case 1 :  Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const Coffee())); break ;
-    case 2 : break;
-    case 3 :break;
+      case 0:
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const Home()));
+        break;
+      case 1:
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const Coffee()));
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
     }
   }
 }
-
-
