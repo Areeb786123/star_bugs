@@ -2,14 +2,17 @@ import 'package:star_bugs_ui/data/models/response/posts.dart';
 import 'package:star_bugs_ui/data/network/remote/apis.dart';
 
 class HomeController {
-  List<Post>  post = [];
-  List<Post> getAllposts() {
-    Api().getAllPosts().then((value) {
+  List<Post> postList = [];
+
+  List<Post> getAllPosts() {
+    Api().getPostList().then((value) {
       for (int i = 0; i <= value.posts.length - 1; i++) {
-        post.add(value.posts[i]);
-        print(value.posts[i]);
+        print("home 123");
+        print("home ${value.posts}");
+        postList.add(value.posts[i]);
       }
     });
-    return post;
+
+    return postList;
   }
 }
