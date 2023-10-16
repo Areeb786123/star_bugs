@@ -10,9 +10,20 @@ import 'package:star_bugs_ui/ui/common/base.dart';
 import '../../data/models/response/posts.dart';
 import '../home/home.dart';
 
-class Coffee extends StatelessWidget {
+class Coffee extends StatefulWidget {
   const Coffee({super.key});
+  @override
+  State<StatefulWidget> createState() {
+    return _Coffee();
+  }
+}
 
+class _Coffee extends State<Coffee> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    CoffeeController().getCoffeeDetails();
+  }
   @override
   Widget build(BuildContext context) {
     var data = CoffeeController().coffeeList;
