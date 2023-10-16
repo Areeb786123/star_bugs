@@ -1,11 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:star_bugs_ui/ui/home/home.dart';
 
 class Splash extends StatelessWidget {
   const Splash({super.key});
 
   @override
   Widget build(BuildContext context) {
+    /*
+    * Timer for splash screen
+    * */
+    Timer(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const Home())));
+
     return MaterialApp(
       home: Scaffold(
         body: Center(
@@ -21,7 +32,7 @@ class Splash extends StatelessWidget {
               const Text(
                 "StarBucks",
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 40,
                   fontWeight: FontWeight.bold,
                 ),
               ),
