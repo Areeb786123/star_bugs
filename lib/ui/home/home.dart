@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:star_bugs_ui/controllers/home_controllers.dart';
 import 'package:star_bugs_ui/ui/coffee/coffee.dart';
-import 'package:star_bugs_ui/ui/utils/routes/app_routes.dart';
 
 import '../../data/models/response/posts.dart';
 
@@ -18,6 +17,17 @@ class Home extends StatefulWidget {
 
 class _HomeScreen extends State<Home> {
   int _currentIndex = 0;
+  List<Post>? _post;
+
+  void loadData() async {
+    _post = await HomeController().getAllPosts();
+  }
+
+  @override
+  void initState() {
+    loadData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,14 +130,19 @@ class _HomeScreen extends State<Home> {
               const SizedBox(height: 14),
               Container(
                 alignment: Alignment.centerLeft,
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    "Explore",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {});
+                    },
+                    child: const Text(
+                      "Explore",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ),
@@ -135,7 +150,9 @@ class _HomeScreen extends State<Home> {
               * list of items
               * */
               const SizedBox(height: 14),
-              renderExploreList(HomeController().getAllPosts()),
+              _post == null
+                  ? const CircularProgressIndicator()
+                  : renderExploreList(_post!),
             ],
           ),
         ),
@@ -175,21 +192,26 @@ class _HomeScreen extends State<Home> {
   }
 
   Widget renderExploreList(List<Post> post) {
-    print("Areeb $post");
+    log("Areeb $post");
     if (post.isNotEmpty) {
-      return ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: post.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                post[index].title.toString(),
-                style: const TextStyle(
-                  fontSize: 20,
+      return SizedBox(
+        height: 400,
+        width: MediaQuery.of(context).size.width,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: post.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Card(
+                child: Text(
+                  post[index].title.toString(),
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-            );
-          });
+              );
+            }),
+      );
     } else {
       return emptyData();
     }

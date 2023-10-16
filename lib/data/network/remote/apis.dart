@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:star_bugs_ui/data/models/response/posts.dart';
 import 'package:star_bugs_ui/data/network/remote/api_manager.dart';
@@ -9,12 +9,12 @@ class Api {
     PostList postList = PostList(posts: []);
     try {
       print("ApiX  123");
-      var data = await ApiManager().getAllPosts(endPoints: EndPoints.BASE_URL + EndPoints.ALL_POSTS);
-      print("ApiX  $data");
+      dynamic data = await ApiManager()
+          .getAllPosts(endPoints: EndPoints.BASE_URL + EndPoints.ALL_POSTS);
+      // log(data.runtimeType.toString());
        postList = PostList.fromJson(data);
       return postList;
-    }
-    catch(e) {
+    } catch (e) {
       throw Exception(e);
     }
   }
