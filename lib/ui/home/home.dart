@@ -135,7 +135,7 @@ class _HomeScreen extends State<Home> {
               * list of items
               * */
               const SizedBox(height: 14),
-              renderExploreList(HomeController().post),
+              renderExploreList(HomeController().getAllposts()),
             ],
           ),
         ),
@@ -198,9 +198,9 @@ class _HomeScreen extends State<Home> {
    Widget emptyData() {
     return SizedBox(
       width: double.infinity,
-      child: Flexible(
+
         child: Image.asset('asset/images/no_internet.png'),
-      ),
+
     );
   }
 
