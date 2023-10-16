@@ -20,20 +20,21 @@ class Api {
     }
   }
 
-  Future<void> getCoffeeData() async {
+  Future<List<coffeeModel>> getCoffeeData() async {
     try {
       List<coffeeModel> coffeeList = [];
       var json = await ApiManager()
           .getCoffeeData(endPoints: EndPoints.BASE_URL + EndPoints.ALL_POSTS);
-      print("coffeeModel  $json");
       if (json is List) {
         // Check if the JSON data is a list
         coffeeList = json.map((item) => coffeeModel.fromJson(item)).toList();
         // Now, coffeeList contains a list of coffeeModel instances
         print("Coffee List: ${coffeeList.length}");
+
       } else {
         print("JSON data is not a list");
       }
+      return coffeeList;
     } catch (e) {
       throw Exception(e);
     }
