@@ -19,6 +19,21 @@ class ApiManager {
     }
   }
 
+  Future<dynamic> getCoffeeData({required String endPoints}) async {
+    try {
+      Uri uri = Uri.parse(endPoints);
+      var responseJson = {};
+      final response = await http.get(uri);
+
+      //here we are returning Future after decoding it  from json to future object
+      print("coffeResponse ${response.body}");
+      print("response we are sending ${jsonDecode(response.body)}");
+      return jsonDecode(response.body);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   dynamic handleUri(http.Response response) {
     // print("responseObj $response");
     switch (response.statusCode) {

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:star_bugs_ui/data/models/response/coffeeModel.dart';
 import 'package:star_bugs_ui/data/models/response/posts.dart';
 import 'package:star_bugs_ui/data/network/remote/api_manager.dart';
 import 'package:star_bugs_ui/data/network/remote/end_points.dart';
@@ -12,8 +13,27 @@ class Api {
       dynamic data = await ApiManager()
           .getAllPosts(endPoints: EndPoints.BASE_URL + EndPoints.ALL_POSTS);
       // log(data.runtimeType.toString());
-       postList = PostList.fromJson(data);
+      postList = PostList.fromJson(data);
       return postList;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> getCoffeeData() async {
+    try {
+      List<coffeeModel> coffeeList = [];
+      var json = await ApiManager()
+          .getCoffeeData(endPoints: EndPoints.BASE_URL + EndPoints.ALL_POSTS);
+      print("coffeeModel  $json");
+      if (json is List) {
+        // Check if the JSON data is a list
+        coffeeList = json.map((item) => coffeeModel.fromJson(item)).toList();
+        // Now, coffeeList contains a list of coffeeModel instances
+        print("Coffee List: ${coffeeList.length}");
+      } else {
+        print("JSON data is not a list");
+      }
     } catch (e) {
       throw Exception(e);
     }

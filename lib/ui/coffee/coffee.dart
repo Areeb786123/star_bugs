@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:star_bugs_ui/data/network/remote/api_manager.dart';
+import 'package:star_bugs_ui/data/network/remote/apis.dart';
+import 'package:star_bugs_ui/data/network/remote/end_points.dart';
 import 'package:star_bugs_ui/ui/common/base.dart';
 
 import '../../data/models/response/posts.dart';
@@ -10,6 +13,7 @@ class Coffee extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Api().getCoffeeData();
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
