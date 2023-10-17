@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:star_bugs_ui/controllers/home_controllers.dart';
+import 'package:star_bugs_ui/data/network/remote/apis.dart';
 import 'package:star_bugs_ui/ui/coffee/coffee.dart';
 
 import '../../data/models/response/posts.dart';
@@ -17,18 +19,13 @@ class Home extends StatefulWidget {
 
 class _HomeScreen extends State<Home> {
   int _currentIndex = 0;
-  List<Post>? _post;
-
-  void loadData() async {
-    _post = await HomeController().getAllPosts();
-  }
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   void initState() {
-    loadData();
+   homeController.getAllPosts();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -150,9 +147,13 @@ class _HomeScreen extends State<Home> {
               * list of items
               * */
               const SizedBox(height: 14),
-              _post == null
-                  ? const CircularProgressIndicator()
-                  : renderExploreList(_post!),
+
+              Obx(() {
+               return  homeController.postList == null
+                    ? const CircularProgressIndicator()
+                    : renderExploreList(homeController.postList);
+              }),
+
             ],
           ),
         ),
