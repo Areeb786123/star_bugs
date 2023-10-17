@@ -1,11 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:star_bugs_ui/controllers/home_controllers.dart';
-import 'package:star_bugs_ui/data/network/remote/apis.dart';
 import 'package:star_bugs_ui/ui/coffee/coffee.dart';
-
 import '../../data/models/response/posts.dart';
 
 class Home extends StatefulWidget {
@@ -23,9 +20,10 @@ class _HomeScreen extends State<Home> {
 
   @override
   void initState() {
-   homeController.getAllPosts();
+    homeController.getAllPosts();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -147,13 +145,11 @@ class _HomeScreen extends State<Home> {
               * list of items
               * */
               const SizedBox(height: 14),
-
               Obx(() {
-               return  homeController.postList == null
+                return homeController.postList == null
                     ? const CircularProgressIndicator()
                     : renderExploreList(homeController.postList);
               }),
-
             ],
           ),
         ),
@@ -196,18 +192,40 @@ class _HomeScreen extends State<Home> {
     log("Areeb $post");
     if (post.isNotEmpty) {
       return SizedBox(
-        height: 400,
-        width: MediaQuery.of(context).size.width,
+        height: 160,
+        width: MediaQuery.of(context).size.width - 50,
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: post.length,
-            shrinkWrap: true,
             itemBuilder: (context, index) {
-              return Card(
-                child: Text(
-                  post[index].title.toString(),
-                  style: const TextStyle(
-                    fontSize: 20,
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                child: Card(
+                  child: Stack(
+                    children: <Widget>[
+                      Image.network(
+                        post[index].url.toString(),
+                        fit: BoxFit
+                            .fitWidth, // Take full width of the card/ Set the desired height
+                        // Ensure it covers the entire width
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30),
+                            child: Text(
+                              post[index].title.toString().toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 24,
+                              ),
+                              maxLines: 2,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               );
