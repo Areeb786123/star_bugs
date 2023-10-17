@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:star_bugs_ui/bindings/coffee_binding.dart';
 import 'package:star_bugs_ui/ui/coffee/coffee.dart';
 import 'package:star_bugs_ui/ui/splash/screen/splash.dart';
 import 'package:star_bugs_ui/ui/utils/routes/routes_consts.dart';

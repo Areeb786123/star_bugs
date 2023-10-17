@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:star_bugs_ui/controllers/coffee_controller.dart';
 import 'package:star_bugs_ui/data/models/response/coffeeModel.dart';
 import 'package:star_bugs_ui/data/network/remote/api_manager.dart';
@@ -12,6 +14,7 @@ import '../home/home.dart';
 
 class Coffee extends StatefulWidget {
   const Coffee({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _Coffee();
@@ -19,14 +22,18 @@ class Coffee extends StatefulWidget {
 }
 
 class _Coffee extends State<Coffee> {
+  final CoffeeController coffeeController = Get.put(CoffeeController());
+
+  // final CoffeeController coffeeController = Get.find<CoffeeController>();
+
   @override
   void initState() {
-    // TODO: implement initState
-    CoffeeController().getCoffeeDetails();
+    coffeeController.getCoffeeDetails();
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    var data = CoffeeController().coffeeList;
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -38,7 +45,13 @@ class _Coffee extends State<Coffee> {
         ),
       ),
       body: MaterialApp(
-        home: showCoffeeList(data),
+        home: Obx(() {
+          if (coffeeController.coffeeList.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return getData(coffeeController.coffeeList);
+          }
+        }),
       ),
     );
   }
@@ -62,10 +75,10 @@ class _Coffee extends State<Coffee> {
   }
 
   Widget showCoffeeList(List<coffeeModel> post) {
-    if (post.isEmpty) {
-      return Base.emptyData();
-    } else {
-      return getData(post);
-    }
+    // if (post.isEmpty) {
+    //   return const  Center(child: CircularProgressIndicator());
+    // } else {
+    return getData(post);
+    // }
   }
 }
