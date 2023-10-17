@@ -5,13 +5,15 @@ import 'package:star_bugs_ui/data/models/response/posts.dart';
 import 'package:star_bugs_ui/data/network/remote/apis.dart';
 
 class HomeController extends GetxController {
-  List<Post> postList = [];
+  RxList<Post> postList = <Post>[].obs;
 
-  Future<List<Post>> getAllPosts() async {
+  Future<void> getAllPosts() async {
     PostList value = await Api().getPostList();
-    postList = value.posts;
+    postList.clear();
+    for (int i = 0; i < 10; i++) {
+      postList.add(value.posts[i]);
+    }
     update();
-    return postList;
     // log(postList.length.toString());
   }
 }
